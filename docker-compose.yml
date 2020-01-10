@@ -29,6 +29,7 @@ services:
       placement:
         constraints:
           - node.lables.consul.server == true
+          
   consultemplate:
     image: hashicorp/consul-template:alpine
     environment: 
