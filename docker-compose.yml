@@ -6,7 +6,7 @@ networks:
 configs: 
   template:
     name: template_config
-    file: /data/docker-comsul-template/test.ctmpl
+    file: ./test.ctmpl
 volumes: 
   data_json:
 
@@ -35,13 +35,13 @@ services:
     environment: 
       - 'CT_LOCAL_CONFIG=log_level = debug'
     configs:
-      - source: template
+      - source: template_config
         target: /template/config/test.ctmpl
     volumes: 
       - '/data/docker-comsul-template/json:/template/data'
     command: 
       - 'consul-template'
-      - '-consul-addr:consul:8500'
+      - '-consul-addr:consul:8508'
       - '-template'
       - '/template/config/test.ctmpl:/template/data/result.json'
     networks: 
