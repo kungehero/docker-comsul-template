@@ -35,7 +35,7 @@ services:
     environment: 
       - 'CT_LOCAL_CONFIG=log_level = debug'
     configs:
-      - source: template_config
+      - source: template
         target: /template/config/test.ctmpl
     volumes: 
       - '/data/docker-comsul-template/json:/template/data'
