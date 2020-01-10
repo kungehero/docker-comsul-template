@@ -1,0 +1,54 @@
+version: '3.6'
+
+networks: 
+  consul-net:
+    external: true
+configs: 
+  template:
+    name: template_config
+    file: ./test.ctmpl
+volumes: 
+  data_json:
+
+services:
+  consul:
+    image: consul:1.62
+    environment: 
+      - CONSUL_BIND_INTERFACE=eth0
+    command: 'agent -server -bootstrap-expect 1 -client 0.0.0.0  -ui'
+    ports:
+      - 8508:8500
+    volumes: 
+      - './data:consul/data'
+    networks: 
+      - consul-net
+    deploy:
+      replicas: 1
+      restart_Policy: 
+        condition: on-failure
+      placement:
+        constraints:
+          - node.lables.consul.server == true
+  consultemplate:
+    image: hashicorp/consul-template:alpine
+    environment: 
+      - 'CT_LOCAL_CONFIG=log_level = "debug"'
+    configs:
+      - source: template
+        target: /template/config/test.ctmpl
+    volumes: 
+      - './json:/template/data'
+    command: 
+      - 'consul-template'
+      - '-consul-addr:consul:8500'
+      - '-template'
+      - '/template/config/test.ctmpl:/template/data/result.json'
+    networks: 
+      - consul-net
+    deploy:
+      replicas: 1
+      restart_Policy: 
+        condition: on-failure
+      placement:
+        constraints:
+          - node.lables.consul.template == true
