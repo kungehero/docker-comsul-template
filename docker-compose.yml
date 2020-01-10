@@ -6,7 +6,7 @@ networks:
 configs: 
   template:
     name: template_config
-    file: ./test.ctmpl
+    file: /data/docker-comsul-template/test.ctmpl
 volumes: 
   data_json:
 
@@ -33,7 +33,7 @@ services:
   consultemplate:
     image: hashicorp/consul-template:alpine
     environment: 
-      - 'CT_LOCAL_CONFIG=log_level = debug'
+      - 'CT_LOCAL_CONFIG=log_level = "debug"'
     configs:
       - source: template
         target: /template/config/test.ctmpl
