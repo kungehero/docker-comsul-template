@@ -28,7 +28,7 @@ services:
         condition: on-failure
       placement:
         constraints:
-          - node.lables.consul.server == true
+          - node.labels.consul.server == true
 
   consultemplate:
     image: hashicorp/consul-template:alpine
@@ -52,4 +52,4 @@ services:
         condition: on-failure
       placement:
         constraints:
-          - node.lables.consul.template == true
+          - node.labels.consul.template == true
