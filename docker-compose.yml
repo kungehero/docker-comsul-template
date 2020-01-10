@@ -41,7 +41,7 @@ services:
       - '/data/docker-comsul-template/json:/template/data'
     command: 
       - 'consul-template'
-      - '-consul-addr:consul:8500'
+      - '-consul-addr=consul:8500'
       - '-template'
       - '/template/config/test.ctmpl:/template/data/result.json'
     networks: 
