@@ -31,7 +31,7 @@ services:
           - node.labels.consul.server == true
 
   consultemplate:
-    image: hashicorp/consul-template:alpine
+    image: hashicorp/consul-template:0.20.0-alpine
     environment: 
       - 'CT_LOCAL_CONFIG=log_level = "debug"'
     configs:
