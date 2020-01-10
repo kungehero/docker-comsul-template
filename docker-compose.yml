@@ -6,7 +6,7 @@ networks:
 configs: 
   template:
     name: template_config
-    file: ./test.ctmpl
+    file: /data/docker-comsul-template/test.ctmpl
 volumes: 
   data_json:
 
@@ -19,7 +19,7 @@ services:
     ports:
       - 8508:8500
     volumes: 
-      - './data:consul/data'
+      - 'data_json:/consul/data'
     networks: 
       - consul-net
     deploy:
@@ -33,12 +33,12 @@ services:
   consultemplate:
     image: hashicorp/consul-template:alpine
     environment: 
-      - 'CT_LOCAL_CONFIG=log_level = "debug"'
+      - 'CT_LOCAL_CONFIG=log_level = debug'
     configs:
       - source: template
         target: /template/config/test.ctmpl
     volumes: 
-      - './json:/template/data'
+      - '/data/docker-comsul-template/json:/template/data'
     command: 
       - 'consul-template'
       - '-consul-addr:consul:8500'
